@@ -55,11 +55,15 @@ public class MockBookService implements BookService{
 
     @Override
     public void delete(Long id) {
-        list.remove(id.intValue()-1);
+        if (this.get(id).isPresent()) {
+            list.remove(this.get(id).get());
+        }
     }
 
     @Override
     public void update(Book book) {
-        list.set(book.getId().intValue()-1, book);
+        if (this.get(book.getId()).isPresent()) {
+            list.set(list.indexOf(this.get(book.getId()).get()), book);
+        }
     }
 }
